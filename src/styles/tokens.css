@@ -1,0 +1,126 @@
+/* =============================================================================
+ *  DESIGN TOKENS — Club Deportivo Casino
+ *  -----------------------------------------------------------------------------
+ *  Este es el ÚNICO archivo que hay que tocar para cambiar colores y fuentes.
+ *
+ *  Colores oficiales del club:
+ *    · Principales:  granate rojizo y blanco
+ *    · Secundarios:  amarillo ámbar y negro
+ *    · Terciario:    azul marino
+ *  Si el club tiene los códigos exactos (del escudo o del manual de marca),
+ *  reemplazá los valores de la paleta y todo el sitio se actualiza solo.
+ *  Después corré `npm run assets` para regenerar íconos e imágenes para compartir.
+ * ============================================================================= */
+
+:root {
+  /* ---- Paleta oficial del club -------------------------------------------- */
+  --club-granate: #cc0033; /* granate rojizo del escudo (principal) */
+  --club-rojo: var(--club-granate); /* alias usado por el escudo */
+  --club-blanco: #ffffff; /* blanco (principal) */
+  --club-ambar: #f2a516; /* amarillo ámbar (secundario) */
+  --club-negro: #141010; /* negro (secundario) */
+  --club-marino: #16233f; /* azul marino (terciario) */
+
+  /* ---- Roles de color en la interfaz -------------------------------------- */
+  --color-primario: var(--club-granate); /* superficies de marca, encabezados, tarjetas */
+  --color-secundario: var(--club-granate); /* botones y llamados a la acción (hover: secundario-700) */
+  --color-acento: var(--club-ambar); /* destacados, kickers, foco */
+  --color-negro: var(--club-negro);
+  --color-terciario: var(--club-marino); /* Centro Cultural, detalles y modo oscuro */
+  --color-blanco: var(--club-blanco);
+
+  /* Variantes derivadas (se recalculan solas si cambiás la paleta) */
+  --color-primario-700: color-mix(in oklab, var(--color-primario) 78%, black);
+  --color-primario-300: color-mix(in oklab, var(--color-primario) 50%, white);
+  --color-primario-50: color-mix(in oklab, var(--color-primario) 6%, white);
+  --color-secundario-700: color-mix(in oklab, var(--color-secundario) 80%, black);
+  --color-acento-200: color-mix(in oklab, var(--color-acento) 40%, white);
+  --color-terciario-300: color-mix(in oklab, var(--color-terciario) 45%, white);
+
+  /* ---- Superficies (modo claro) ------------------------------------------- */
+  --bg: #f7f4ef;
+  --bg-alt: #efe9e1;
+  --surface: #ffffff;
+  --fg: var(--club-negro);
+  --fg-muted: #5a5052;
+  --border: color-mix(in oklab, var(--fg) 12%, transparent);
+  /* Colores de marca legibles como texto sobre --bg */
+  --brand-ink: var(--color-primario);
+  --brand-accent-ink: var(--color-secundario-700);
+  --glass: color-mix(in oklab, var(--bg) 72%, transparent);
+  --glass-border: color-mix(in oklab, var(--fg) 10%, transparent);
+  --shadow: 0 1px 2px rgb(20 16 16 / 0.06), 0 12px 40px -12px rgb(20 16 16 / 0.25);
+  /* Secciones "de ambiente" (Centro Cultural y pie): claras en modo claro, negras en oscuro */
+  --bg-ambiente: var(--bg-alt);
+  --card-ambiente: var(--surface);
+  /* Tarjeta de la cita del Centro Cultural: crema con texto granate; en oscuro, al revés */
+  --cita-bg: var(--card-ambiente);
+  --cita-fg: var(--color-primario);
+  --cita-btn: #fff;
+  --blob-ambiente: 0.22;
+
+  /* ---- Tipografía: Montserrat (variable, autoalojada) ---------------------- */
+  --font-display: 'Montserrat Variable', 'Montserrat Fallback Display', sans-serif;
+  --font-display-semi: 'Montserrat Variable', 'Montserrat Fallback', sans-serif;
+  --font-body: 'Montserrat Variable', 'Montserrat Fallback', sans-serif;
+  /* Centro Cultural: Montserrat itálica liviana */
+  --font-expresiva: 'Montserrat Variable', 'Montserrat Fallback', sans-serif;
+
+  /* Títulos fluidos (Montserrat es ancha: escala pensada para no desbordar) */
+  --text-mega: clamp(2.5rem, 1.1rem + 6.2vw, 7.5rem);
+  --text-giant: clamp(2rem, 1.15rem + 3.9vw, 5rem);
+  --text-huge: clamp(1.75rem, 1.2rem + 2.5vw, 3.5rem);
+
+  /* ---- Formas ------------------------------------------------------------ */
+  --radius-xl: 1.25rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.75rem;
+
+  /* ---- Movimiento -------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  color-scheme: light;
+}
+
+/* ---- Modo oscuro: negro cálido con secciones en azul marino ---------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0e0a0a;
+    --bg-alt: #0f1830;
+    --surface: #1b1516;
+    --fg: #f5f0ea;
+    --fg-muted: #b3a9aa;
+    --brand-ink: #ff8da0;
+    --brand-accent-ink: #f5b84a;
+    --glass: color-mix(in oklab, var(--bg) 66%, transparent);
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 48px -16px rgb(0 0 0 / 0.7);
+    --bg-ambiente: #0e0a0a;
+    --card-ambiente: #fff6ea;
+    --cita-bg: var(--color-primario);
+    --cita-fg: #fff6ea;
+    --cita-btn: var(--color-primario);
+    --blob-ambiente: 0.7;
+    color-scheme: dark;
+  }
+}
+
+/* ---- Modo oscuro forzado con el toggle ---- */
+:root[data-theme='dark'] {
+  --bg: #0e0a0a;
+  --bg-alt: #0f1830;
+  --surface: #1b1516;
+  --fg: #f5f0ea;
+  --fg-muted: #b3a9aa;
+  --brand-ink: #ff8da0;
+  --brand-accent-ink: #f5b84a;
+  --glass: color-mix(in oklab, var(--bg) 66%, transparent);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 48px -16px rgb(0 0 0 / 0.7);
+  --bg-ambiente: #0e0a0a;
+  --card-ambiente: #fff6ea;
+  --cita-bg: var(--color-primario);
+  --cita-fg: #fff6ea;
+  --cita-btn: var(--color-primario);
+  --blob-ambiente: 0.7;
+  color-scheme: dark;
+}

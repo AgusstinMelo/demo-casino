@@ -1,0 +1,22 @@
+{
+  "actualizado": "2026-11-09T18:00:00Z",
+  "cuentas": {
+    "casinofutbolok": [
+      { "id": "ej-futbol-1", "tipo": "imagen", "src": "/fotos/futbol.jpg" }
+    ],
+    "casinobasquet": [],
+    "handballdeportivocasino": [
+      { "id": "ej-handball-1", "tipo": "imagen", "src": "/fotos/handball.jpg" },
+      { "id": "ej-handball-2", "tipo": "imagen", "src": "/fotos/parquet-obra.jpg" }
+    ],
+    "clubdeportivocasino": [],
+    "aethlos_training": [
+      { "id": "ej-gimnasio-1", "tipo": "imagen", "src": "/fotos/gimnasio.jpg" }
+    ],
+    "cdesarrollotenis.rio3": [],
+    "arqueros_rio3": [],
+    "centroculturalcasino": [
+      { "id": "ej-cultura-1", "tipo": "imagen", "src": "/fotos/teatro.jpg" }
+    ]
+  }
+}

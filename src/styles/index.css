@@ -1,0 +1,670 @@
+@import 'tailwindcss';
+@import './fonts.css';
+@import './tokens.css';
+
+/* Tailwind usa los tokens: bg-primario, text-fg, bg-surface, font-display, etc. */
+@theme inline {
+  --color-primario: var(--color-primario);
+  --color-primario-700: var(--color-primario-700);
+  --color-primario-300: var(--color-primario-300);
+  --color-primario-50: var(--color-primario-50);
+  --color-secundario: var(--color-secundario);
+  --color-secundario-700: var(--color-secundario-700);
+  --color-acento: var(--color-acento);
+  --color-acento-200: var(--color-acento-200);
+  --color-terciario: var(--color-terciario);
+  --color-terciario-300: var(--color-terciario-300);
+  --color-negro: var(--color-negro);
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--border);
+  --color-ambiente: var(--bg-ambiente);
+  --color-card-ambiente: var(--card-ambiente);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-accent-ink: var(--brand-accent-ink);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-expresiva: var(--font-expresiva);
+  --radius-4xl: var(--radius-3xl);
+  --ease-out-expo: var(--ease-out);
+}
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ---------------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection {
+    background: var(--color-acento);
+    color: #0c1424;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-acento);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  img,
+  video {
+    max-width: 100%;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* Lenis (scroll suave) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tipografía de títulos (Montserrat Black, mayúsculas)
+ * ------------------------------------------------------------------------ */
+@utility font-condensed {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+@utility font-semicondensed {
+  font-family: var(--font-display-semi);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+@utility text-mega {
+  font-size: var(--text-mega);
+}
+@utility text-giant {
+  font-size: var(--text-giant);
+}
+@utility text-huge {
+  font-size: var(--text-huge);
+}
+@utility kicker {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Clases propias en la capa components: las utilidades de Tailwind les ganan */
+@layer components {
+/* ---------------------------------------------------------------------------
+ * Datos a completar: se ven resaltados para que nadie los tome como reales
+ * ------------------------------------------------------------------------ */
+.ph {
+  background: repeating-linear-gradient(-45deg, rgb(255 194 58 / 0.22) 0 6px, rgb(255 194 58 / 0.08) 6px 12px);
+  outline: 1px dashed color-mix(in oklab, var(--color-acento) 80%, black);
+  outline-offset: 1px;
+  border-radius: 4px;
+  padding: 0 0.25em;
+  font-size: 0.92em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.tag-ejemplo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgb(255 194 58 / 0.9);
+  color: #2a1d00;
+}
+
+/* ---------------------------------------------------------------------------
+ * Fotografía con tratamiento consistente: duotono suave + grano cálido
+ * ------------------------------------------------------------------------ */
+.foto-club {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--color-primario-700);
+}
+.foto-club > img {
+  filter: saturate(0.88) contrast(1.06);
+}
+.foto-club::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(160deg, color-mix(in oklab, var(--color-primario) 55%, transparent) 0%, transparent 55%, color-mix(in oklab, var(--color-secundario) 30%, transparent) 100%);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  z-index: 1;
+}
+.foto-bn > img {
+  filter: grayscale(1) contrast(1.1) brightness(0.9);
+}
+.foto-sepia > img {
+  filter: grayscale(0.85) sepia(0.35) contrast(1.05);
+}
+
+/* ---------------------------------------------------------------------------
+ * Fundido entre secciones: las secciones con fondo propio se funden con el
+ * fondo de la página arriba y abajo, en vez de cortar en seco.
+ * El alto del fundido es menor que el padding de cada sección, así nunca tapa contenido.
+ * `fundido-sin-abajo`: para la última sección (el pie), que no tiene nada debajo.
+ * ------------------------------------------------------------------------ */
+.fundido {
+  --fundido-alto: 3.5rem;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .fundido {
+    --fundido-alto: 5rem;
+  }
+}
+.fundido::before,
+.fundido::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: var(--fundido-alto);
+  pointer-events: none;
+  z-index: 1;
+}
+.fundido::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+}
+.fundido::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+.fundido-sin-abajo::after {
+  content: none;
+}
+
+/* Grano: SVG de ruido muy liviano */
+.grano::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------------------------------------------------------------------------
+ * Mesh gradient con formas orgánicas animadas
+ * ------------------------------------------------------------------------ */
+.mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.mesh span {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  /* gradiente radial en vez de filter: blur → mucho más barato en celulares */
+  background: radial-gradient(circle at center, var(--blob) 0%, transparent 68%) !important;
+  opacity: 0.6;
+  will-change: transform;
+  animation: blob 22s var(--ease-out) infinite alternate;
+}
+.mesh span:nth-child(1) {
+  --blob: var(--color-primario-700);
+  top: -20%;
+  left: -15%;
+}
+.mesh span:nth-child(2) {
+  --blob: var(--color-secundario);
+  bottom: -30%;
+  right: -20%;
+  animation-duration: 28s;
+  animation-delay: -6s;
+  opacity: 0.35;
+}
+.mesh span:nth-child(3) {
+  --blob: var(--color-acento);
+  top: 30%;
+  left: 40%;
+  width: 34vmax;
+  height: 34vmax;
+  animation-duration: 34s;
+  animation-delay: -12s;
+  opacity: 0.25;
+}
+@keyframes blob {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(6vw, 4vh, 0) rotate(120deg) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-4vw, -6vh, 0) rotate(240deg) scale(0.92);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Marquee infinito inclinado
+ * ------------------------------------------------------------------------ */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-dur, 38s) linear infinite;
+}
+.marquee-track[data-reverse='true'] {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Póster animado para reels sin video (Ken Burns) */
+.ken-burns {
+  animation: kenburns 14s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(-3%, -2%, 0);
+  }
+}
+
+/* Barra de progreso de historias */
+@keyframes story-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Indicador "escribiendo..." */
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(100deg, var(--bg-alt) 30%, color-mix(in oklab, var(--bg-alt) 60%, var(--surface)) 50%, var(--bg-alt) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -150% 0;
+  }
+}
+
+/* Glass (solo header, menú y modales) */
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+}
+
+/* Anillo de color de las historias */
+.story-ring {
+  background: conic-gradient(from 210deg, var(--color-acento), var(--color-secundario), var(--color-primario-300), var(--color-acento));
+}
+.story-ring[data-seen='true'] {
+  background: color-mix(in oklab, var(--fg) 25%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Scroll-driven animations (CSS nativo). Si el navegador no las soporta,
+ * los componentes usan Motion como fallback (ver lib/scroll.ts).
+ * ------------------------------------------------------------------------ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sd-reveal {
+      animation: sd-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    /* Opacidad y movimiento por separado: la foto queda opaca apenas entra en pantalla
+       (si no, en modo claro se ve "lavada" por el fondo) y el zoom sigue hasta la mitad */
+    .sd-photo {
+      animation:
+        sd-photo-opacidad linear both,
+        sd-photo linear both;
+      animation-timeline: view(), view();
+      animation-range:
+        entry 0% entry 70%,
+        entry 0% cover 50%;
+    }
+    .sd-color {
+      animation: sd-fade-in linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 60%;
+    }
+    .sd-progress {
+      transform-origin: top;
+      animation: sd-progress linear both;
+      animation-timeline: --historia;
+      animation-range: contain 0% contain 100%;
+    }
+    .sd-stack-card {
+      animation: sd-stack linear both;
+      animation-timeline: view();
+      animation-range: exit-crossing 0% exit-crossing 100%;
+    }
+  }
+}
+.timeline-historia {
+  view-timeline-name: --historia;
+}
+@keyframes sd-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 64px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes sd-photo {
+  from {
+    transform: scale(0.86) translate3d(0, 40px, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes sd-photo-opacidad {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sd-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sd-progress {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes sd-stack {
+  to {
+    transform: scale(0.9);
+    opacity: 0.55;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * View Transitions entre home y páginas de disciplina
+ * ------------------------------------------------------------------------ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: var(--ease-out);
+}
+::view-transition-group(*) {
+  animation-duration: 0.6s;
+  animation-timing-function: var(--ease-out);
+}
+::view-transition-image-pair(*) {
+  isolation: auto;
+}
+
+/* ---------------------------------------------------------------------------
+ * Cursor personalizado (solo desktop con mouse)
+ * ------------------------------------------------------------------------ */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -1.125rem 0 0 -1.125rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--fg);
+  mix-blend-mode: difference;
+  border-color: #fff;
+  display: grid;
+  place-items: center;
+  transition:
+    width 0.3s var(--ease-out),
+    height 0.3s var(--ease-out),
+    margin 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    opacity 0.3s;
+}
+.cursor-ring[data-state='link'] {
+  width: 3.75rem;
+  height: 3.75rem;
+  margin: -1.875rem 0 0 -1.875rem;
+  background: #fff;
+}
+/* Sin efecto de color: solo un aro fino (las historias con foto) */
+.cursor-ring[data-state='neutro'] {
+  width: 3.75rem;
+  height: 3.75rem;
+  margin: -1.875rem 0 0 -1.875rem;
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.85);
+  mix-blend-mode: normal;
+}
+/* Sobre botones rojo/blanco: el círculo lo dibuja la "lupa" (.cursor-lente) */
+.cursor-ring[data-state='swap'] {
+  width: 3.75rem;
+  height: 3.75rem;
+  margin: -1.875rem 0 0 -1.875rem;
+  background: transparent;
+  border-color: transparent;
+  mix-blend-mode: normal;
+}
+.cursor-lente {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+.cursor-lente-circulo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cursor-lente-circulo > [data-modo='colores'] * {
+  color: inherit !important;
+}
+.cursor-lente-circulo > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+}
+.cursor-ring[data-state='foto'] {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: -2.75rem 0 0 -2.75rem;
+  background: var(--color-acento);
+  border-color: var(--color-acento);
+  mix-blend-mode: normal;
+}
+.cursor-ring[data-state='foto']::after {
+  content: 'Ver';
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0c1424;
+}
+
+/* Feedback háptico visual al tocar */
+.tap {
+  transition: transform 0.18s var(--ease-spring);
+}
+.tap:active {
+  transform: scale(0.95);
+}
+
+/* Utilidad: ocultar scrollbar en carruseles horizontales */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+}
+
+/* ---------------------------------------------------------------------------
+ * Movimiento reducido: sin marquee, sin blobs, sin parallax ni transiciones
+ * ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track,
+  .mesh span,
+  .ken-burns {
+    animation: none !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* Pulso del botón de WhatsApp (no sale de la pantalla) */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Tipografía cinética del hero en CSS puro (no depende de JS → mejor LCP).
+ * Las palabras ya están pintadas desde el primer cuadro; una barra con el color
+ * de acento las "destapa" (solo transform). */
+@keyframes kt-rise {
+  from {
+    transform: translate3d(0, 0.18em, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes kt-wipe {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+.kt-word {
+  position: relative;
+  display: inline-block;
+  animation: kt-rise 0.8s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+.kt-word::after {
+  content: '';
+  position: absolute;
+  inset: 0.06em -0.04em 0.02em;
+  background: var(--color-acento);
+  transform-origin: right center;
+  animation: kt-wipe 0.75s var(--ease-out) both;
+  animation-delay: calc(var(--d, 0s) + 0.15s);
+}
+
+/* Ondas de la pileta */
+@keyframes olas {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
